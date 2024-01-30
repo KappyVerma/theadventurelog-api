@@ -32,6 +32,6 @@ app.use("/", (_req, res) => {
   res.send("Hitting the server");
 });
 
-app.listen(3030, () => {
+app.listen(PORT, () => {
   console.log(`listening on PORT: ${PORT}`);
 });
