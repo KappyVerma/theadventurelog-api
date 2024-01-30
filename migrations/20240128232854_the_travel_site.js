@@ -9,7 +9,7 @@ exports.up = function (knex) {
       table.string("name").notNullable();
       table.string("email").notNullable();
       table.string("password").notNullable();
-      table.timestamp("created_at").defailtTo(knex.fn.now());
+      table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
@@ -22,11 +22,11 @@ exports.up = function (knex) {
       table.string("photo").notNullable();
       table
         .integer("user_id")
-        .notNullable.unsigned()
+        .unsigned()
         .references("user.id")
-        .onupdate("CASCADE")
+        .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.timestamp("created_at").defailtTo(knex.fn.now());
+      table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
@@ -48,7 +48,7 @@ exports.up = function (knex) {
         .references("user.id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.timestamp("created_at").defaltTo(knex.fn.now());
+      table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
