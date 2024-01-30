@@ -5,17 +5,17 @@
 exports.up = function (knex) {
   return knex.schema
     .createTable("user", (table) => {
-      table.increments("id").parimary();
+      table.increments("id").primary();
       table.string("name").notNullable();
       table.string("email").notNullable();
       table.string("password").notNullable();
       table.timestamp("created_at").defailtTo(knex.fn.now());
       table
         .timestamp("updated_at")
-        .defailtTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+        .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     })
     .createTable("bucketList", (table) => {
-      table.increments("id").parimary();
+      table.increments("id").primary();
       table.string("city").notNullable();
       table.string("person").notNullable();
       table.string("due").notNullable();
@@ -29,10 +29,10 @@ exports.up = function (knex) {
       table.timestamp("created_at").defailtTo(knex.fn.now());
       table
         .timestamp("updated_at")
-        .defailtTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+        .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     })
     .createTable("destination", (table) => {
-      table.increments("id").parimary();
+      table.increments("id").primary();
       table.string("content").notNullable();
       table.string("place").notNullable();
       table.float("rating");
@@ -48,10 +48,10 @@ exports.up = function (knex) {
         .references("user.id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.timestamp("created_at").defailtTo(knex.fn.now());
+      table.timestamp("created_at").defaltTo(knex.fn.now());
       table
         .timestamp("updated_at")
-        .defailtTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+        .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     });
 };
 
