@@ -14,9 +14,10 @@ app.use(middleware);
 
 app.use(express.json());
 
-function middleware(req, res, next) {
+function middleware(req, _res, next) {
   console.log(new Date().toLocaleDateString());
   console.log(req.url);
+  next();
 }
 
 const userRoute = require("./routes/user");
@@ -31,6 +32,6 @@ app.use("/", (_req, res) => {
   res.send("Hitting the server");
 });
 
-app.listen(PORT, () => {
+app.listen(3030, () => {
   console.log(`listening on PORT: ${PORT}`);
 });
