@@ -6,9 +6,9 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("user", (table) => {
       table.increments("id").primary();
-      table.string("name").notNullable();
+      table.string("userName").notNullable();
       table.string("email").notNullable();
-      table.string("password").notNullable();
+      table.string("userPassword").notNullable();
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
@@ -16,10 +16,11 @@ exports.up = function (knex) {
     })
     .createTable("bucketList", (table) => {
       table.increments("id").primary();
-      table.string("city").notNullable();
-      table.string("person").notNullable();
-      table.string("due").notNullable();
-      table.string("photo").notNullable();
+      table.string("place").notNullable();
+      table.string("withWho").notNullable();
+      table.string("dueDate").notNullable();
+      table.string("img_url").notNullable();
+      table.boolean("status").notNullable();
       table
         .integer("user_id")
         .unsigned()
@@ -33,9 +34,10 @@ exports.up = function (knex) {
     })
     .createTable("destination", (table) => {
       table.increments("id").primary();
+      table.string("visitedPlaces").notNullable();
       table.string("content").notNullable();
-      table.string("place").notNullable();
-      table.float("rating");
+      table.string("img_url").notNullable();
+      table.float("ratings");
       table
         .integer("bucketlist_id")
         .unsigned()
