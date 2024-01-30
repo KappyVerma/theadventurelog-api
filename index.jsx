@@ -1,15 +1,28 @@
 require("dotenv").config();
+
 const express = require("express");
-const cors = require("cors");
 const app = express();
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3030;
+
+app.use(cors());
+
+app.use(express.static("public/images"));
+
+app.use(middleware);
+
+app.use(express.json());
+
+function middleware(req, res, next) {
+  console.log(new Date().toLocaleDateString());
+  console.log(req.url);
+}
+
 const userRoute = require("./routes/user");
 const bucketListRoute = require("./routes/bucketList");
 const destinationRoute = require("./routes/destinations");
 
-app.use(cors());
-app.use(express.json());
 app.use("/user", userRoute);
 app.use("/bucketList", bucketListRoute);
 app.use("/destinations", destinationRoute);
