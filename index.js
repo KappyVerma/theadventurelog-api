@@ -25,7 +25,7 @@ const bucketListRoute = require("./routes/bucketList");
 const destinationRoute = require("./routes/destinations");
 
 app.use("/user", userRoute);
-app.use("/bucketList", bucketListRoute);
+app.use("/bucketlist", bucketListRoute);
 app.use("/destinations", destinationRoute);
 
 app.use("/", (_req, res) => {
