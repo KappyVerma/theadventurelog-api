@@ -38,12 +38,41 @@ router.route("/:id").get(async (req, res) => {
     const data = await knex("user").select("*").where({ id: req.params.id });
     res.status(200).json(data);
   } catch {
-    res
-      .status(400)
-      .json(
-        "Error retrieving while getting a single data from warehouse table"
-      );
+    res.status(400).json("Error retrieving while getting data from server ");
   }
 });
+
+router.route("/:id/bucketlist").get(async (req, res) => {
+  try {
+    const data = await knex("bucketList").where({ user_id: req.params.id });
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Error retrieving while getting data from server");
+  }
+});
+
+// router.route("/:id/bucketlist/places").get(async (req, res) => {
+//   try {
+//     const data = await knex("places").where({ user_id: req.params.id });
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json("Error retrieving while getting data from server");
+//   }
+// });
+
+// router.route("/:userId/bucketlist/:id/places").get(async (req, res) => {
+//   try {
+//     const data = await knex("places").where({
+//       user_id: req.params.userId,
+//       bucketlist_id: req.params.id,
+//     });
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json("Error retrieving while getting data from server");
+//   }
+// });
 
 module.exports = router;

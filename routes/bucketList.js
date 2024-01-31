@@ -46,7 +46,7 @@ router
       res
         .status(400)
         .json(
-          "Error retrieving while getting a single data from warehouse table"
+          "Error retrieving while getting a single data from bucketlist table"
         );
     }
   })
@@ -66,8 +66,19 @@ router
       console.log(err);
       res
         .status(500)
-        .json({ message: "unable to update with the warehouseid" });
+        .json({ message: "unable to update with the bucketlistId" });
     }
   });
+router.route("/:id/places").get(async (req, res) => {
+  try {
+    const data = await knex("places").where({
+      bucketList_id: req.params.id,
+    });
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Error retrieving while getting data from server");
+  }
+});
 
 module.exports = router;

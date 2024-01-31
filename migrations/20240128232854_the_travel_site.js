@@ -7,8 +7,8 @@ exports.up = function (knex) {
     .createTable("user", (table) => {
       table.increments("id").primary();
       table.string("userName").notNullable();
-      table.string("email").notNullable();
       table.string("userPassword").notNullable();
+      table.string("userEmail").notNullable();
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
@@ -16,7 +16,7 @@ exports.up = function (knex) {
     })
     .createTable("bucketList", (table) => {
       table.increments("id").primary();
-      table.string("place").notNullable();
+      table.string("destination").notNullable();
       table.string("withWho").notNullable();
       table.string("dueDate").notNullable();
       table.string("img_url").notNullable();
@@ -32,7 +32,7 @@ exports.up = function (knex) {
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     })
-    .createTable("destination", (table) => {
+    .createTable("places", (table) => {
       table.increments("id").primary();
       table.string("visitedPlaces").notNullable();
       table.string("content").notNullable();
@@ -63,7 +63,7 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema
-    .dropTable("destination")
+    .dropTable("places")
     .dropTable("bucketlist")
     .dropTable("user");
 };
