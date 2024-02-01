@@ -1,9 +1,7 @@
-require("dotenv").config();
-
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
+require("dotenv").config();
 const PORT = process.env.PORT || 3030;
 
 app.use(cors());
@@ -19,11 +17,13 @@ function middleware(req, _res, next) {
 
 const userRoute = require("./routes/user");
 const bucketListRoute = require("./routes/bucketList");
-const placesRoute = require("./routes/places");
+const venueRoute = require("./routes/venue");
+const signinRoute = require("./routes/signin");
 
 app.use("/user", userRoute);
 app.use("/bucketlist", bucketListRoute);
-app.use("/places", placesRoute);
+app.use("/venue", venueRoute);
+app.use("/signin", signinRoute);
 
 app.use("/", (_req, res) => {
   res.send("Hitting the server");

@@ -6,21 +6,20 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("user", (table) => {
       table.increments("id").primary();
-      table.string("userName").notNullable();
-      table.string("userPassword").notNullable();
-      table.string("userEmail").notNullable();
+      table.string("username").notNullable();
+      table.string("password").notNullable();
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     })
-    .createTable("bucketList", (table) => {
+    .createTable("bucketlist", (table) => {
       table.increments("id").primary();
       table.string("destination").notNullable();
-      table.string("withWho").notNullable();
-      table.string("dueDate").notNullable();
-      table.string("img_url").notNullable();
-      table.boolean("status").notNullable();
+      table.string("accompany").notNullable();
+      table.string("duedate").notNullable();
+      table.string("image_url").notNullable();
+      table.boolean("status").notNullable().defaultTo(false);
       table
         .integer("user_id")
         .unsigned()
@@ -32,24 +31,27 @@ exports.up = function (knex) {
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     })
-    .createTable("places", (table) => {
+    .createTable("venue", (table) => {
       table.increments("id").primary();
-      table.string("visitedPlaces").notNullable();
+      table.string("visitedplaces").notNullable();
       table.string("content").notNullable();
-      table.string("img_url").notNullable();
+      table.string("image_url").notNullable();
       table.float("ratings");
       table
+        .integer("user_id")
+        .notNullable()
+        .unsigned()
+        .references("user.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+      table
         .integer("bucketlist_id")
+        .notNullable()
         .unsigned()
         .references("bucketlist.id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table
-        .integer("user_id")
-        .unsigned()
-        .references("user.id")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table
         .timestamp("updated_at")
@@ -63,7 +65,7 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema
-    .dropTable("places")
+    .dropTable("venue")
     .dropTable("bucketlist")
     .dropTable("user");
 };

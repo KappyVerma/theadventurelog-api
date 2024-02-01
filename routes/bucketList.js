@@ -5,7 +5,7 @@ router
   .route("/")
   .get(async (_req, res) => {
     try {
-      const data = await knex("bucketList");
+      const data = await knex("bucketlist");
       res.status(200).json(data);
     } catch (err) {
       res.status(400).send("Error getting the data");
@@ -18,7 +18,7 @@ router
         .json({ error: "Request body is empty or missing data" });
     }
     try {
-      const data = await knex("bucketList").insert(req.body);
+      const data = await knex("bucketlist").insert(req.body);
 
       if (data[0]) {
         const updatedBucketList = await knex("user").where({
@@ -38,7 +38,7 @@ router
   .route("/:id")
   .get(async (req, res) => {
     try {
-      const data = await knex("bucketList")
+      const data = await knex("bucketlist")
         .select("*")
         .where({ id: req.params.id });
       res.status(200).json(data);
@@ -52,7 +52,7 @@ router
   })
   .put(async (req, res) => {
     try {
-      const rowUpdate = await knex("bucketList")
+      const rowUpdate = await knex("bucketlist")
         .where({ id: req.params.id })
         .update(req.body);
       if (rowUpdate == 0)
@@ -60,7 +60,7 @@ router
           .status(404)
           .json(`The bucketlist with ${req.params.id} is not available`);
 
-      const updatedBucketList = await knex("bucketList");
+      const updatedBucketList = await knex("bucketlist");
       res.status(200).json(updatedBucketList);
     } catch (err) {
       console.log(err);
@@ -69,10 +69,10 @@ router
         .json({ message: "unable to update with the bucketlistId" });
     }
   });
-router.route("/:id/places").get(async (req, res) => {
+router.route("/:id/venue").get(async (req, res) => {
   try {
-    const data = await knex("places").where({
-      bucketList_id: req.params.id,
+    const data = await knex("venue").where({
+      bucketlist_id: req.params.id,
     });
     res.status(200).json(data);
   } catch (err) {
