@@ -3,7 +3,7 @@ const router = require("express").Router();
 
 router
   .route("/")
-  .get(async (req, res) => {
+  .get(async (_req, res) => {
     try {
       const data = await knex("user");
       res.status(200).json(data); //changes made here (req.body)
@@ -33,14 +33,14 @@ router
     }
   });
 
-router.route("/:id").get(async (req, res) => {
-  try {
-    const data = await knex("user").select("*").where({ id: req.params.id });
-    res.status(200).json(data);
-  } catch {
-    res.status(400).json("Error retrieving while getting data from server ");
-  }
-});
+// router.route("/:id").get(async (req, res) => {
+//   try {
+//     const data = await knex("user").select("*").where({ id: req.params.id });
+//     res.status(200).json(data);
+//   } catch {
+//     res.status(400).json("Error retrieving while getting data from server ");
+//   }
+// });
 
 router.route("/:id/bucketlist").get(async (req, res) => {
   try {
@@ -52,17 +52,17 @@ router.route("/:id/bucketlist").get(async (req, res) => {
   }
 });
 
-router.route("/:userId/bucketlist/:id/venue").get(async (req, res) => {
-  try {
-    const data = await knex("venue").where({
-      user_id: req.params.userId,
-      bucketlist_id: req.params.id,
-    });
-    res.status(200).json(data);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json("Error retrieving while getting data from server");
-  }
-});
+// router.route("/:userId/bucketlist/:id/venue").get(async (req, res) => {
+//   try {
+//     const data = await knex("venue").where({
+//       user_id: req.params.userId,
+//       bucketlist_id: req.params.id,
+//     });
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json("Error retrieving while getting data from server");
+//   }
+// });
 
 module.exports = router;

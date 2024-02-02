@@ -1,13 +1,35 @@
 const knex = require("knex")(require("../knexfile"));
 const router = require("express").Router();
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: "./uploads",
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    const uploadedfileName = uniqueSuffix + "-" + file.originalname;
+    cb(null, uploadedfileName);
+  },
+});
+
+const upload = multer({ storage: storage });
+
 router
   .route("/")
   .get(async (_req, res) => {
     const data = await knex("venue");
     res.status(200).json(data);
-  })
-  .post(async (req, res) => {
+  }) // POST END POINT
+
+  .post(upload.single("imageFile"), async (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+    req.body.image_url = req.file.filename;
+    console.log(req.body);
+
+    // res.json({
+    //   message: "File successfully uploaded!",
+    // });
     if (!req.body) {
       return res
         .status(400)
@@ -15,9 +37,8 @@ router
     }
     try {
       const data = await knex("venue").insert(req.body);
-
       if (data[0]) {
-        const updatedVenue = await knex("user").where({
+        const updatedVenue = await knex("venue").where({
           id: data[0],
         });
         res.status(200).json(updatedVenue);

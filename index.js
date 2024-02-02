@@ -5,7 +5,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3030;
 
 app.use(cors());
-app.use(express.static("public/images"));
+app.use(express.static("uploads"));
 app.use(middleware);
 app.use(express.json());
 
