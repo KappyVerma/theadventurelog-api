@@ -1,5 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 const router = require("express").Router();
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 router
   .route("/")
@@ -11,7 +13,7 @@ router
       res.status(400).send("Error getting the data");
     }
   })
-  .post(async (req, res) => {
+  .post(upload.single("image"), async (req, res) => {
     if (!req.body) {
       return res
         .status(400)

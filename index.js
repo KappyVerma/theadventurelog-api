@@ -18,12 +18,12 @@ function middleware(req, _res, next) {
 const userRoute = require("./routes/user");
 const bucketListRoute = require("./routes/bucketList");
 const venueRoute = require("./routes/venue");
-const signinRoute = require("./routes/signin");
+const loginRoute = require("./routes/login");
 
 app.use("/user", userRoute);
 app.use("/bucketlist", bucketListRoute);
 app.use("/venue", venueRoute);
-app.use("/signin", signinRoute);
+app.use("/login", loginRoute);
 
 app.use("/", (_req, res) => {
   res.send("Hitting the server");

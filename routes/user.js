@@ -6,7 +6,7 @@ router
   .get(async (req, res) => {
     try {
       const data = await knex("user");
-      res.status(200).json(data); //changes made here
+      res.status(200).json(data); //changes made here (req.body)
     } catch (err) {
       res.status(400).send("Error while retrieving data from server");
     }
@@ -51,16 +51,6 @@ router.route("/:id/bucketlist").get(async (req, res) => {
     res.status(400).json("Error retrieving while getting data from server");
   }
 });
-
-// router.route("/:id/bucketlist/places").get(async (req, res) => {
-//   try {
-//     const data = await knex("places").where({ user_id: req.params.id });
-//     res.status(200).json(data);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json("Error retrieving while getting data from server");
-//   }
-// });
 
 router.route("/:userId/bucketlist/:id/venue").get(async (req, res) => {
   try {

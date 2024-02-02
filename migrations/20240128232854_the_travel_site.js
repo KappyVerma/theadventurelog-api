@@ -18,7 +18,6 @@ exports.up = function (knex) {
       table.string("destination").notNullable();
       table.string("accompany").notNullable();
       table.string("duedate").notNullable();
-      table.string("image_url").notNullable();
       table.boolean("status").notNullable().defaultTo(false);
       table
         .integer("user_id")

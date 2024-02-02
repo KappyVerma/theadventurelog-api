@@ -10,7 +10,6 @@ router.route("/").post(async (req, res) => {
     const user = await knex("user")
       .where({ username: req.body.username })
       .first();
-
     if (user) {
       if (req.body.password === user.password) {
         res.status(200).json({ user });
