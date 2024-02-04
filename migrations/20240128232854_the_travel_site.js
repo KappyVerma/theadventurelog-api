@@ -32,6 +32,7 @@ exports.up = function (knex) {
     })
     .createTable("venue", (table) => {
       table.increments("id").primary();
+      table.string("when").notNullable();
       table.string("visitedplaces").notNullable();
       table.string("content").notNullable();
       table.string("image_url").notNullable();
