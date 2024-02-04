@@ -34,25 +34,48 @@ router
     }
   });
 
+router.route("/:id").get(async (req, res) => {
+  try {
+    const data = await knex("bucketlist")
+      .select("*")
+      .where({ id: req.params.id });
+    res.status(200).json(data);
+  } catch {
+    res
+      .status(400)
+      .json(
+        "Error retrieving while getting a single data from bucketlist table"
+      );
+  }
+});
+
 router
-  .route("/:id")
+  .route("/:id/venue")
   .get(async (req, res) => {
     try {
-      const data = await knex("bucketlist")
-        .select("*")
-        .where({ id: req.params.id });
+      const data = await knex("venue")
+        .select(
+          "venue.id",
+          "venue.when",
+          "venue.visitedplaces",
+          "venue.content",
+          "venue.image_url",
+          "venue.ratings",
+          "bucketlist.destination"
+        )
+        .join("bucketlist", "venue.bucketlist_id", "bucketlist.id")
+        .where({
+          bucketlist_id: req.params.id,
+        });
       res.status(200).json(data);
-    } catch {
-      res
-        .status(400)
-        .json(
-          "Error retrieving while getting a single data from bucketlist table"
-        );
+    } catch (err) {
+      console.log(err);
+      res.status(400).json("Error retrieving while getting data from server");
     }
   })
   .put(async (req, res) => {
     try {
-      const rowUpdate = await knex("bucketlist")
+      const rowUpdate = await knex("venue")
         .where({ id: req.params.id })
         .update(req.body);
       if (rowUpdate == 0)
@@ -60,8 +83,8 @@ router
           .status(404)
           .json(`The bucketlist with ${req.params.id} is not available`);
 
-      const updatedBucketList = await knex("bucketlist");
-      res.status(200).json(updatedBucketList);
+      const updatedVenueList = await knex("venue");
+      res.status(200).json(updatedVenueList);
     } catch (err) {
       console.log(err);
       res
@@ -69,16 +92,5 @@ router
         .json({ message: "unable to update with the bucketlistId" });
     }
   });
-router.route("/:id/venue").get(async (req, res) => {
-  try {
-    const data = await knex("venue").where({
-      bucketlist_id: req.params.id,
-    });
-    res.status(200).json(data);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json("Error retrieving while getting data from server");
-  }
-});
 
 module.exports = router;

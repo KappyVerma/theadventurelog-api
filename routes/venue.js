@@ -17,19 +17,25 @@ const upload = multer({ storage: storage });
 router
   .route("/")
   .get(async (_req, res) => {
-    const data = await knex("venue");
+    const data = await knex("venue")
+      .select(
+        "venue.id",
+        "venue.when",
+        "venue.visitedplaces",
+        "venue.content",
+        "venue.image_url",
+        "venue.ratings",
+        "bucketlist.destination"
+      )
+      .join("bucketlist", "venue.bucketlist_id", "bucketlist.id");
     res.status(200).json(data);
   }) // POST END POINT
 
   .post(upload.single("imageFile"), async (req, res) => {
-    console.log(req.body);
-    console.log(req.file);
+    //console.log(req.body);
+    //console.log(req.file);
     req.body.image_url = req.file.filename;
-    console.log(req.body);
-
-    // res.json({
-    //   message: "File successfully uploaded!",
-    // });
+    //console.log(req.body);
     if (!req.body) {
       return res
         .status(400)
@@ -61,6 +67,28 @@ router.route("/:id").delete(async (req, res) => {
   } catch (error) {
     console.error("Error deleting data:", error);
     res.status(500).json({ error: "Error in deleting data" });
+  }
+});
+
+router.route("/:id").patch(async (req, res) => {
+  console.log(req.body, req.params.id);
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res
+      .status(400)
+      .json({ error: "Request body is empty or missing data" });
+  }
+  try {
+    const rowUpdate = await knex("venue")
+      .where({ id: req.params.id })
+      .update(req.body);
+    if (rowUpdate == 0)
+      res.status(404).json(`The venue with ${req.params.id} is not available`);
+
+    const updatedVenueList = await knex("venue");
+    res.status(200).json(updatedVenueList);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "unable to update with the venueId" });
   }
 });
 

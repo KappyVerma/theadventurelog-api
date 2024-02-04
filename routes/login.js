@@ -14,7 +14,7 @@ router.route("/").post(async (req, res) => {
       if (req.body.password === user.password) {
         res.status(200).json({ user });
       } else {
-        res.status(401).json({ error: "Invalid password" });
+        res.status(401).json({ error: "Enter a valid password" });
       }
     } else {
       res.status(404).json({ error: "User not found" });
