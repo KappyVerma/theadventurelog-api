@@ -48,7 +48,10 @@ router.route("/:id/bucketlist").get(async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     console.log(err);
-    res.status(400).json("Error retrieving while getting data from server");
+    res.status(400).json({
+      message: "Error retrieving while getting data from server",
+      error: err,
+    });
   }
 });
 
