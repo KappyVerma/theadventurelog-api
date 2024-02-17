@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 
 router
   .route("/")
@@ -12,13 +13,20 @@ router
     }
   })
   .post(async (req, res) => {
-    if (!req.body) {
+    const { password, username } = req.body;
+    const hash = await bcrypt.hash(password, 12);
+    const user = {
+      username,
+      password: hash,
+    };
+
+    if (!user) {
       return res
         .status(400)
         .json({ error: "Request body is empty or missing data" });
     }
     try {
-      const data = await knex("user").insert(req.body);
+      const data = await knex("user").insert(user);
 
       if (data[0]) {
         const updatedUser = await knex("user").where({
@@ -33,18 +41,12 @@ router
     }
   });
 
-// router.route("/:id").get(async (req, res) => {
-//   try {
-//     const data = await knex("user").select("*").where({ id: req.params.id });
-//     res.status(200).json(data);
-//   } catch {
-//     res.status(400).json("Error retrieving while getting data from server ");
-//   }
-// });
-
 router.route("/:id/bucketlist").get(async (req, res) => {
   try {
     const data = await knex("bucketList").where({ user_id: req.params.id });
+    if (!req.params.id) {
+      console.log("missing id");
+    }
     res.status(200).json(data);
   } catch (err) {
     console.log(err);
@@ -54,18 +56,5 @@ router.route("/:id/bucketlist").get(async (req, res) => {
     });
   }
 });
-
-// router.route("/:userId/bucketlist/:id/venue").get(async (req, res) => {
-//   try {
-//     const data = await knex("venue").where({
-//       user_id: req.params.userId,
-//       bucketlist_id: req.params.id,
-//     });
-//     res.status(200).json(data);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json("Error retrieving while getting data from server");
-//   }
-// });
 
 module.exports = router;

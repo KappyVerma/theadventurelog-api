@@ -25,21 +25,5 @@ exports.seed = async function (knex) {
       status: true,
       user_id: 1,
     },
-    {
-      id: 4,
-      destination: "Barcelona",
-      accompany: "Partner",
-      duedate: "2024-09-20",
-      status: false,
-      user_id: 2,
-    },
-    {
-      id: 5,
-      destination: "Sydney",
-      accompany: "Friends",
-      duedate: "2024-11-25",
-      status: false,
-      user_id: 2,
-    },
   ]);
 };
