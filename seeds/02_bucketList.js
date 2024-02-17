@@ -23,7 +23,7 @@ exports.seed = async function (knex) {
       accompany: "Solo",
       duedate: "2024-10-15",
       status: true,
-      user_id: 12,
+      user_id: 21,
     },
   ]);
 };

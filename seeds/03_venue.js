@@ -10,7 +10,7 @@ exports.seed = async function (knex) {
       image_url: "central_park_image.jpg",
       ratings: 4.7,
       bucketList_id: 1,
-      user_id: 1,
+      user_id: 21,
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ exports.seed = async function (knex) {
       image_url: "sagrada_familia_image.jpg",
       ratings: 4.8,
       bucketList_id: 2,
-      user_id: 2,
+      user_id: 22,
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ exports.seed = async function (knex) {
       image_url: "sydney_opera_house_image.jpg",
       ratings: 4.5,
       bucketList_id: 3,
-      user_id: 2,
+      user_id: 22,
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ exports.seed = async function (knex) {
       image_url: "buckingham_palace_image.jpg",
       ratings: 4.6,
       bucketList_id: 1,
-      user_id: 1,
+      user_id: 21,
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ exports.seed = async function (knex) {
       image_url: "fushimi_inari_shrine_image.jpg",
       ratings: 4.9,
       bucketList_id: 2,
-      user_id: 2,
+      user_id: 22,
     },
     {
       id: 6,
@@ -60,7 +60,7 @@ exports.seed = async function (knex) {
       image_url: "christ_redeemer_image.jpg",
       ratings: 4.7,
       bucketList_id: 3,
-      user_id: 1,
+      user_id: 21,
     },
   ]);
 };
