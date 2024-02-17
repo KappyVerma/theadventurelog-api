@@ -7,7 +7,7 @@ exports.seed = async function (knex) {
       accompany: "John Doe",
       duedate: "2024-02-15",
       status: false,
-      user_id: 1,
+      user_id: 21,
     },
     {
       id: 2,
@@ -15,7 +15,7 @@ exports.seed = async function (knex) {
       accompany: "Jane Smith",
       duedate: "2024-03-20",
       status: false,
-      user_id: 2,
+      user_id: 22,
     },
     {
       id: 3,
@@ -23,7 +23,7 @@ exports.seed = async function (knex) {
       accompany: "Solo",
       duedate: "2024-10-15",
       status: true,
-      user_id: 1,
+      user_id: 12,
     },
   ]);
 };
