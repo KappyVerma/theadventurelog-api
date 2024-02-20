@@ -107,6 +107,17 @@ router.route("/:id/venue").get(async (req, res) => {
     res.status(400).json("Error retrieving while getting data from server");
   }
 });
-//
+
+router.route("/:id/todo").get(async (req, res) => {
+  try {
+    const data = await knex("todolist").where({
+      bucketlist_id: req.params.id,
+    });
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Error retrieving while getting data from server");
+  }
+});
 
 module.exports = router;

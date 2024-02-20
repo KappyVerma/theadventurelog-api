@@ -56,6 +56,23 @@ exports.up = function (knex) {
       table
         .timestamp("updated_at")
         .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+    })
+    .createTable("todolist", (table) => {
+      table.increments("id").primary();
+      table.string("todoitem");
+      table.boolean("status").notNullable().defaultTo(false);
+      table
+        .integer("bucketlist_id")
+        .notNullable()
+        .unsigned()
+        .references("bucketlist.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+
+      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table
+        .timestamp("updated_at")
+        .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     });
 };
 
@@ -66,6 +83,7 @@ exports.up = function (knex) {
 exports.down = function (knex) {
   return knex.schema
     .dropTable("venue")
+    .dropTable("todolist")
     .dropTable("bucketlist")
     .dropTable("user");
 };
