@@ -70,7 +70,6 @@ router
     }
   })
   .delete(async (req, res) => {
-    console.log(req.params.id);
     if (!req.params.id) {
       res.status(400).json({ error: "The id is not in the bucketlist table" });
     }

@@ -3,6 +3,8 @@ const router = require("express").Router();
 
 const multer = require("multer");
 
+const whitelist = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+
 const storage = multer.diskStorage({
   destination: "./uploads",
   filename: function (_req, file, cb) {
@@ -66,7 +68,6 @@ router.route("/:id").delete(async (req, res) => {
 });
 
 router.route("/:id").patch(async (req, res) => {
-  console.log(req.body, req.params.id);
   if (!req.body || Object.keys(req.body).length === 0) {
     return res
       .status(400)
