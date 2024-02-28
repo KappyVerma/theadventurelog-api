@@ -3,7 +3,7 @@ const router = require("express").Router();
 const path = require("path");
 
 const multer = require("multer");
-const allowedImageExtensions = [".jpg", ".jpeg"];
+const allowedImageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
 
 const storage = multer.diskStorage({
   destination: "./uploads",
