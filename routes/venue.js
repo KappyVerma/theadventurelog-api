@@ -1,9 +1,9 @@
 const knex = require("knex")(require("../knexfile"));
 const router = require("express").Router();
+const path = require("path");
 
 const multer = require("multer");
-
-const whitelist = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+const allowedImageExtensions = [".jpg", ".jpeg"];
 
 const storage = multer.diskStorage({
   destination: "./uploads",
@@ -14,7 +14,20 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = function (_req, file, cb) {
+  const fileOrignalName = file.originalname.toLowerCase();
+  if (!fileOrignalName.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return cb(
+      new Error(
+        "Only image files with jpg, jpeg, png, or gif extensions are allowed!"
+      ),
+      false
+    );
+  }
+  cb(null, true);
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.route("/").get(async (_req, res) => {
   const data = await knex("venue")
@@ -32,12 +45,19 @@ router.route("/").get(async (_req, res) => {
 });
 
 router.route("/").post(upload.single("imageFile"), async (req, res) => {
-  req.body.image_url = req.file.filename;
   if (!req.body) {
     return res
       .status(400)
       .json({ error: "Request body is empty or missing data" });
   }
+  const ext = path.extname(req.file.originalname).toLowerCase();
+  if (!allowedImageExtensions.includes(ext)) {
+    return res
+      .status(400)
+      .json({ error: "Only jpg/jpeg image files are allowed" });
+  }
+
+  req.body.image_url = req.file.filename;
   try {
     const data = await knex("venue").insert(req.body);
     if (data[0]) {

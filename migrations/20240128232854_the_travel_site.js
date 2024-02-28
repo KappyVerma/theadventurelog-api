@@ -15,7 +15,7 @@ exports.up = function (knex) {
     })
     .createTable("bucketlist", (table) => {
       table.increments("id").primary();
-      table.string("destination").notNullable();
+      table.string("destination").notNullable().collate("utf8mb4_unicode_ci");
       table.string("accompany").notNullable();
       table.string("duedate").notNullable();
       table.boolean("status").notNullable().defaultTo(false);
@@ -34,7 +34,7 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("when").notNullable();
       table.string("visitedplaces").notNullable();
-      table.string("content").notNullable();
+      table.string("content").notNullable().collate("utf8mb4_unicode_ci");
       table.string("image_url").notNullable();
       table.float("ratings");
       table
@@ -59,7 +59,7 @@ exports.up = function (knex) {
     })
     .createTable("todolist", (table) => {
       table.increments("id").primary();
-      table.string("todoitem");
+      table.string("todoitem").collate("utf8mb4_unicode_ci");
       table.boolean("status").notNullable().defaultTo(false);
       table
         .integer("bucketlist_id")
