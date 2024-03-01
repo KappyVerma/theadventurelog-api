@@ -43,11 +43,12 @@ router
 
 router.route("/:id/bucketlist").get(async (req, res) => {
   try {
-    const data = await knex("bucketList").where({ user_id: req.params.id });
+    const data = await knex("bucketlist").where({ user_id: req.params.id });
     if (!req.params.id) {
       console.log("missing id");
+    } else {
+      res.status(200).json(data);
     }
-    res.status(200).json(data);
   } catch (err) {
     console.log(err);
     res.status(400).json({
