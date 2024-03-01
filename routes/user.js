@@ -7,7 +7,7 @@ router
   .get(async (_req, res) => {
     try {
       const data = await knex("user");
-      res.status(200).json(data); //changes made here (req.body)
+      res.status(200).json(req.body); //changes made here (req.body) to data
     } catch (err) {
       res.status(400).send("Error while retrieving data from server");
     }
