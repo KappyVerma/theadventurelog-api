@@ -7,7 +7,7 @@ router
   .get(async (_req, res) => {
     try {
       const data = await knex("user");
-      res.status(200).json(req.body); //changes made here (req.body) to data
+      res.status(200).json(data); //changes made here (req.body)
     } catch (err) {
       res.status(400).send("Error while retrieving data from server");
     }
@@ -48,6 +48,7 @@ router.route("/:id/bucketlist").get(async (req, res) => {
       console.log("missing id");
     } else {
       res.status(200).json(data);
+      console.log(data);
     }
   } catch (err) {
     console.log(err);
