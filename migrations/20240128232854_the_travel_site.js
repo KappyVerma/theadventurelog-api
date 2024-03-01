@@ -82,8 +82,8 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema
-    .dropTable("venue")
     .dropTable("todolist")
+    .dropTable("venue")
     .dropTable("bucketlist")
     .dropTable("user");
 };
