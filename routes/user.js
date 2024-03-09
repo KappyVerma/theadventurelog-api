@@ -40,6 +40,19 @@ router
       res.status(400).json({ error: "Connection not made with table" });
     }
   });
+router.route("/:id").delete(async (req, res) => {
+  try {
+    const data = await knex("user").where({ id: req.params.id }).delete();
+    if (data === 0) {
+      res.status(404).json({ error: "User not found" });
+    } else {
+      res.status(200).json({ message: "User deleted successfully" });
+    }
+  } catch (error) {
+    console.error("Error deleting data:", error);
+    res.status(500).json({ error: "Error in deleting data" });
+  }
+});
 
 router.route("/:id/bucketlist").get(async (req, res) => {
   try {
